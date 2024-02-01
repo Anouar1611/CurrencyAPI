@@ -11,9 +11,10 @@ You have a basic spring-boot application. You can open the web interface using: 
 Please create a currency converter website which will have input fields for amount and from/to currency selection you. The website should look like the mockup above.
 
 The website does not have to be beautiful, but it must be functional.
- * The inputs should only allow numbers and comma. The values have 2 decimal places and are separated by commas.
- * You can fetch the symbols and latest rates from this API: http://api.exchangeratesapi.io/v1/latest?access_key=83d85a4f7f2a437cb52bfa98a7d51dfd
- * Please use this endpoint, we expect you to implement conversion based on latest rates yourself.
+
+* The inputs should only allow numbers and comma. The values have 2 decimal places and are separated by commas.
+* You can fetch the symbols and latest rates from this API: http://api.exchangeratesapi.io/v1/latest?access_key=83d85a4f7f2a437cb52bfa98a7d51dfd
+* Please use this endpoint, we expect you to implement conversion based on latest rates yourself.
 
 ### 2. Currencies full names
 
