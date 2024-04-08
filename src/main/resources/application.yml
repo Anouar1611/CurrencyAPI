@@ -1,6 +1,14 @@
+currency:
+  api:
+    url: http://localhost:9090/currencies
+currencies:
+  names:
+    url: https://openexchangerates.org/api/currencies.json
 spring:
   application:
     name: Currency Converter
+  cache:
+    type: caffeine
 
 server:
   port: 8080
