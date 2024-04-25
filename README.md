@@ -9,6 +9,6 @@ Feel free to run the API and consume it from either Postman (using this collecti
 Here is a link of my GitHub account to the client I have already implemented: https://github.com/Anouar1611/currency-converter-front.
 
 Some results from this client:
-![result](convert.png)
+![result](convert.PNG)
 
 - Integrated Automated test using Selenium.
