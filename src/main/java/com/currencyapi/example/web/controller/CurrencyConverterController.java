@@ -1,8 +1,8 @@
-package de.check24.challenge.web.controller;
+package com.currencyapi.example.web.controller;
 
-import de.check24.challenge.request.ConvertRequest;
-import de.check24.challenge.service.CurrencyConverter;
-import de.check24.challenge.service.CurrencyServiceImpl;
+import com.currencyapi.example.service.CurrencyConverter;
+import com.currencyapi.example.service.CurrencyServiceImpl;
+import com.currencyapi.example.request.ConvertRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
@@ -10,14 +10,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:3000")
 public class CurrencyConverterController {
 
-    @Autowired
-    CurrencyConverter currencyConverter;
+    private final CurrencyConverter currencyConverter;
 
-    @Autowired
-    CurrencyServiceImpl currencyServiceImpl;
+    private final CurrencyServiceImpl currencyServiceImpl;
+
+    public CurrencyConverterController(
+            CurrencyConverter currencyConverter,
+            CurrencyServiceImpl currencyServiceImpl
+    ) {
+        this.currencyConverter = currencyConverter;
+        this.currencyServiceImpl = currencyServiceImpl;
+    }
 
     @PostMapping("/convert")
     public ResponseEntity<Double> convertEurAmount(

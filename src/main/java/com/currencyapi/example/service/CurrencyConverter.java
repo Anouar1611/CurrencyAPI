@@ -1,4 +1,4 @@
-package de.check24.challenge.service;
+package com.currencyapi.example.service;
 
 public interface CurrencyConverter {
     double convert(double amount, String targetCurrency);

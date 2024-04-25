@@ -1,4 +1,4 @@
-package de.check24.challenge.service;
+package com.currencyapi.example.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

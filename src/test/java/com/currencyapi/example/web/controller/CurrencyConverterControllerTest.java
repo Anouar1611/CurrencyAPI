@@ -1,8 +1,8 @@
-package de.check24.challenge.web.controller;
+package com.currencyapi.example.web.controller;
 
-import de.check24.challenge.request.ConvertRequest;
-import de.check24.challenge.service.CurrencyConverter;
-import de.check24.challenge.service.CurrencyServiceImpl;
+import com.currencyapi.example.service.CurrencyConverter;
+import com.currencyapi.example.service.CurrencyServiceImpl;
+import com.currencyapi.example.request.ConvertRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -28,9 +28,7 @@ class CurrencyConverterControllerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        controller = new CurrencyConverterController();
-        controller.currencyConverter = currencyConverter;
-        controller.currencyServiceImpl = currencyServiceImpl;
+        controller = new CurrencyConverterController(currencyConverter, currencyServiceImpl);
     }
 
     @Test

@@ -10,3 +10,5 @@ Here is a link of my GitHub account to the client I have already implemented: ht
 
 Some results from this client:
 ![result](convert.png)
+
+- Integrated Automated test using Selenium.

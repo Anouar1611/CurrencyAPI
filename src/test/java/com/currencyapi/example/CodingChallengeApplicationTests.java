@@ -1,4 +1,4 @@
-package de.check24.challenge;
+package com.currencyapi.example;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

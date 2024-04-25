@@ -1,4 +1,4 @@
-package de.check24.challenge.service;
+package com.currencyapi.example.service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

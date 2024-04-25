@@ -1,4 +1,4 @@
-package de.check24.challenge.configuration;
+package com.currencyapi.example.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

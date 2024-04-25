@@ -1,4 +1,4 @@
-package de.check24.challenge.request;
+package com.currencyapi.example.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
