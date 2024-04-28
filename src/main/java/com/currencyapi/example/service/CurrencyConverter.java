@@ -1,5 +1,7 @@
 package com.currencyapi.example.service;
 
+import reactor.core.publisher.Mono;
+
 public interface CurrencyConverter {
-    double convert(double amount, String targetCurrency);
+    Mono<Double> convert(double amount, String targetCurrency);
 }

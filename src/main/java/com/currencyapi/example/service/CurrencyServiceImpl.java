@@ -1,41 +1,46 @@
 package com.currencyapi.example.service;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
-import java.io.IOException;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import java.util.HashMap;
 import java.util.Map;
 
 @Service
 public class CurrencyServiceImpl implements CurrencyService {
 
-    @Autowired
-    private RestTemplate restTemplate;
-
     @Value("${currencies.names.url}")
     private String CURRENCIES_API_URL;
 
+    private final WebClient webClient;
+
+    public CurrencyServiceImpl() {
+        this.webClient = WebClient.builder()
+                .baseUrl("http://localhost:8080")
+                .build();
+    }
+
     @Override
-    public Map<String, String> getFullCurrencyNames() {
-        String responseBody = restTemplate.getForObject(CURRENCIES_API_URL, String.class);
-        return parseCurrencyFullNames(responseBody);
+    public Mono<Map<String, String>> getFullCurrencyNames() {
+        return webClient.get()
+                .uri(CURRENCIES_API_URL)
+                .retrieve()
+                .bodyToMono(String.class)
+                .map(this::parseCurrencyFullNames);
     }
 
     private Map<String, String> parseCurrencyFullNames(String responseBody) {
         Map<String, String> currencyFullNames = new HashMap<>();
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode jsonNode = objectMapper.readTree(responseBody);
-            jsonNode.fields().forEachRemaining(entry -> currencyFullNames.put(entry.getKey(), entry.getValue().asText()));
-        } catch (IOException e) {
-            e.printStackTrace();
+        String[] pairs = responseBody.replaceAll("[{}\"]", "").split(",");
+        for (String pair : pairs) {
+            String[] keyValue = pair.split(":");
+            if (keyValue.length == 2) {
+                currencyFullNames.put(keyValue[0].trim(), keyValue[1].trim());
+            }
         }
         return currencyFullNames;
     }
-
 }
+

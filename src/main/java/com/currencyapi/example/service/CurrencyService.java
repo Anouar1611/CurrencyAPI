@@ -1,8 +1,10 @@
 package com.currencyapi.example.service;
 
+import reactor.core.publisher.Mono;
+
 import java.util.Map;
 
 public interface CurrencyService {
 
-    Map<String, String> getFullCurrencyNames();
+    Mono<Map<String, String>> getFullCurrencyNames();
 }
