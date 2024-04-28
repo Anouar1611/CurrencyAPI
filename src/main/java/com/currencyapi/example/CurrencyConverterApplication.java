@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Spring boot application start point
  */
 @SpringBootApplication
-public class CodingChallengeApplication {
+public class CurrencyConverterApplication {
 
     /**
      * Application entrypoint
@@ -15,6 +15,6 @@ public class CodingChallengeApplication {
      * @param args system arguments
      */
     public static void main(String[] args) {
-        SpringApplication.run(CodingChallengeApplication.class, args);
+        SpringApplication.run(CurrencyConverterApplication.class, args);
     }
 }

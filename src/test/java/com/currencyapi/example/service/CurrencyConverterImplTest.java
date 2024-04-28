@@ -1,60 +1,47 @@
 package com.currencyapi.example.service;
 
+import mockwebserver3.MockResponse;
+import mockwebserver3.MockWebServer;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.web.client.RestTemplate;
+import reactor.core.publisher.Mono;
+
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+
 
 class CurrencyConverterImplTest {
 
-        public static final String CURRENCIES_URL = "http://localhost:9090/currencies";
+    public static MockWebServer mockBackEnd;
+    public CurrencyConverterImpl currencyConverterImpl;
 
-        @Mock
-        private RestTemplate restTemplate;
+    @BeforeAll
+    static void setUp() throws IOException {
+        mockBackEnd = new MockWebServer();
+        mockBackEnd.start();
+    }
 
-        private CurrencyConverterImpl currencyConverter;
+    @AfterAll
+    static void tearDown() throws IOException {
+        mockBackEnd.shutdown();
+    }
 
+    @BeforeEach
+    void initialize() {
+        currencyConverterImpl = new CurrencyConverterImpl();
+        currencyConverterImpl.currencies = mockBackEnd.url("http://localhost:9090/currencies").toString();
+    }
 
-        @BeforeEach
-        void setUp() {
-            MockitoAnnotations.openMocks(this);
-            currencyConverter = new CurrencyConverterImpl();
-            currencyConverter.restTemplate = restTemplate;
-            currencyConverter.currencies = CURRENCIES_URL;
-        }
-
-        @Test
-        void testConvertSuccess() {
-            String responseBody = "{\"rates\":{\"CHF\":1.038259}}";
-            when(restTemplate.getForObject(CURRENCIES_URL, String.class)).thenReturn(responseBody);
-
-            double amount = 22.0;
-            double expectedConversionRate = 1.038259;
-            double expectedConvertedAmount = amount * expectedConversionRate;
-            double actualConvertedAmount = currencyConverter.convert(amount, "CHF");
-
-            verify(restTemplate, times(1)).getForObject(CURRENCIES_URL, String.class);
-
-            assertEquals(expectedConvertedAmount, actualConvertedAmount);
-        }
-
-        @Test
-        void testConvertInvalidTargetCurrency() {
-            String responseBody = "{\"rates\":{\"EUR\":1.0,\"USD\":1.21,\"GBP\":0.89}}";
-            when(restTemplate.getForObject(CURRENCIES_URL, String.class)).thenReturn(responseBody);
-
-            double amount = 10.0;
-            String invalidTargetCurrency = "XXX";
-            double actualConvertedAmount = currencyConverter.convert(amount, invalidTargetCurrency);
-
-            verify(restTemplate, times(1)).getForObject(CURRENCIES_URL, String.class);
-
-            assertEquals(0.0, actualConvertedAmount);
-        }
+    @Test
+    void convert_ShouldReturnCorrectConvertedAmount() {
+        String responseBody = "{\"status\": \"true\", \"base\": \"EUR\", \"rates\": {\"USD\": 1.114293}}";
+        mockBackEnd.enqueue(new MockResponse().newBuilder().body(responseBody).build());
+        Mono<Double> result = currencyConverterImpl.convert(100.0, "USD");
+        assertEquals(111.4293, result.block());
+    }
 
 }
 
