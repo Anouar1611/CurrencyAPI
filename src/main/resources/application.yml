@@ -1,6 +1,12 @@
 currency:
   api:
     url: http://localhost:9090/currencies
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
 currencies:
   names:
     url: https://openexchangerates.org/api/currencies.json
@@ -14,3 +20,6 @@ server:
   port: 8080
   servlet:
     context-path: /
+
+
+
